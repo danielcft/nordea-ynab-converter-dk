@@ -25,8 +25,7 @@ def main():
     source, destination = get_cli_args()
 	# The .csv file from Nordea uses some sort of encoding other than unicode
     with open(source,encoding='ansi') as csvDataFile:
-        # remove first two lines
-        csvDataFile.readline(); 
+        # remove first lines
         csvDataFile.readline();
 
         csvObj =  csv.reader(csvDataFile,delimiter=';')
