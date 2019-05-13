@@ -27,6 +27,7 @@ def main():
     with open(source,encoding='ansi') as csvDataFile:
         # remove first lines
         csvDataFile.readline();
+        csvDataFile.readline();
 
         csvObj =  csv.reader(csvDataFile,delimiter=';')
 		# the destination file will be encoded using unicode
