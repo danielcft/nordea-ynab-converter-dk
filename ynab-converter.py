@@ -24,14 +24,14 @@ def convertToValidDate(row):
 def main():
     source, destination = get_cli_args()
 	# The .csv file from Nordea uses some sort of encoding other than unicode
-    with open(source,encoding='ansi') as csvDataFile:
+    with open(source) as csvDataFile:
         # remove first lines
         csvDataFile.readline();
         csvDataFile.readline();
 
         csvObj =  csv.reader(csvDataFile,delimiter=';')
 		# the destination file will be encoded using unicode
-        with open(destination, 'w+', encoding='utf-8') as outputFile:
+        with open(destination, 'w+') as outputFile:
             outputFile.write('Date;Payee;Memo;Inflow\n')
             for row in csvObj:
                 del(row[2]) # Delete duplicate date
