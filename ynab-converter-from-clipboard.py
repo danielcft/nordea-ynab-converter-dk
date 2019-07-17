@@ -1,4 +1,3 @@
-import csv
 import argparse
 import re
 from datetime import datetime 
@@ -11,27 +10,16 @@ def get_cli_args():
     parser.add_argument('-d', '--destination', type=str, help='Destination filename', default='ynab.csv')
     args = parser.parse_args()
     return args.source, args.destination
-	
-def convertToValidDate(row):
-    newRow = []
-    for cell in row:
-        try: 
-            parsed = datetime.strptime(cell,"%d-%m-%Y")
-            newRow.append(parsed.strftime("%d/%m/%Y"))
-        except:
-            newRow.append(cell)
-    return newRow
 
 def main():
     source, destination = get_cli_args()
-	# The .csv file from Nordea uses some sort of encoding other than unicode
     regex = re.compile("(\d\d-\d\d-\d\d\d\d)\s*(.*).(\d\d-\d\d-\d\d\d\d).\s(-?\d*,\d{2})\skr\.\s*(-?\d+.?\d+,\d{2})\skr.")
     
     data = []
     with open(source) as file:
         for line in file:
             collumn = regex.search(line)
-            data.append([collumn[1],collumn[2],collumn[2],collumn[4]])
+            data.append([collumn[1].strftime("%d/%m/%Y"),collumn[2],collumn[2],collumn[4]])
 
     with open(destination, 'w+') as outputFile:
         outputFile.write('Date;Payee;Memo;Inflow\n')
@@ -41,4 +29,4 @@ def main():
     print('YNAB file written to \'' + destination + '\'')
 
 if __name__=="__main__":
-   main() 
+   main()
